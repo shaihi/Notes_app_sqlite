@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class SQLiteManager extends SQLiteOpenHelper {
@@ -94,7 +97,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 NotesModel.NoteItem note = new NotesModel.NoteItem(firstName, lastName, age, id, deleted);
                 notesModel.notes.add(note);
             }
+        } catch (SQLiteException e) {
+            // handle exception, e.g. log error message
+            Log.e("SQLiteManager", "Error executing query", e);
+        } catch (CursorIndexOutOfBoundsException e) {
+            // handle exception, e.g. log error message
+            Log.e("SQLiteManager", "There was a problem reading one of the fields", e);
         }
-
     }
 }
