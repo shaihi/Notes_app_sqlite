@@ -34,22 +34,19 @@ public class MainActivity extends AppCompatActivity {
         setupResources();
         recyclerView.setAdapter(new AddItemAdapter(this, notesModel));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (lastNumberOfItems != NotesModel.notes.size()) {
-            recyclerView.getAdapter().notifyItemInserted(NotesModel.notes.size()-1);
-        }
-
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     private void setupResources() {
         fab = findViewById(R.id.addItemBtn);
         recyclerView = findViewById(R.id.itemsList);
+
+        SQLiteManager.instanceOfDatabase(this).populateNotesFromDB(notesModel);
 
         fab.setOnClickListener(v -> {
             lastNumberOfItems = notesModel.notes.size();

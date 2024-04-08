@@ -6,7 +6,7 @@ public class NotesModel {
     static public ArrayList<NoteItem> notes = new ArrayList<>();
 
     public void addNoteItem(String firstName, String lastName, String age) {
-        notes.add(new NoteItem(firstName, lastName, age));
+        notes.add(new NoteItem(firstName, lastName, age, notes.size(), false));
     }
 
     public int getNotesCount() {
@@ -26,10 +26,16 @@ public class NotesModel {
         private String lastName;
         private String age;
 
-        public NoteItem(String title, String description, String date) {
-            this.firstName = title;
-            this.lastName = description;
-            this.age = date;
+        private boolean isDeleted = false;
+
+        private int id;
+
+        public NoteItem(String firstName, String lastName, String age, int id, boolean isDeleted) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.id = id;
+            this.isDeleted = isDeleted;
         }
 
         public String getFirstName() {
@@ -42,6 +48,13 @@ public class NotesModel {
 
         public String getAge() {
             return age;
+        }
+
+        public int getId() {
+            return id;
+        }
+        public boolean isDeleted() {
+            return isDeleted;
         }
     }
 }
