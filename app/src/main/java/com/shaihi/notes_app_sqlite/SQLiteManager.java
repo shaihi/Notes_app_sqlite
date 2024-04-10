@@ -79,6 +79,22 @@ public class SQLiteManager extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
     }
 
+    public void updateNoteToDB(NotesModel.NoteItem note) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ID_FIELD, note.getId());
+        values.put(FIRSTNAME_FIELD, note.getFirstName());
+        values.put(LASTNAME_FIELD, note.getLastName());
+        values.put(AGE_FIELD, note.getAge());
+        values.put(DELETED_FIELD, note.isDeleted() ? "deleted" : "");
+
+        //Here we are asking to update the table with TABLE_NAME with the values in values. We
+        //only update the lines in the table WHERE ID equals the values in the string array that is
+        // passed in the last argument
+        db.update(TABLE_NAME, values, "ID=?", new String[]{String.valueOf(note.getId())});
+    }
+
     public void populateNotesFromDB(NotesModel notesModel) {
         SQLiteDatabase db = getReadableDatabase();
 
