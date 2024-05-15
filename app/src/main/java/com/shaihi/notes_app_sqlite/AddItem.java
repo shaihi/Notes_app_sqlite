@@ -48,7 +48,9 @@ public class AddItem extends AppCompatActivity {
         EditText age = findViewById(R.id.enterAge);
         String ageStr = age.getText().toString();
         // Save note to database
-        NotesModel.notes.add(new NotesModel.NoteItem(firstNameStr, lastNameStr, ageStr));
+        NotesModel.NoteItem item = new NotesModel.NoteItem(firstNameStr, lastNameStr, ageStr, notes.size(), false);
+        NotesModel.notes.add(item);
+        SQLiteManager.instanceOfDatabase(this).addNoteToDB(item);
         finish();
     }
 }
